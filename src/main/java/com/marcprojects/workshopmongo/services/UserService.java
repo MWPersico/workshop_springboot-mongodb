@@ -5,7 +5,6 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.marcprojects.workshopmongo.dto.UserDTO;
 import com.marcprojects.workshopmongo.entities.User;
 import com.marcprojects.workshopmongo.repositories.UserRepository;
 import com.marcprojects.workshopmongo.services.exceptions.ResourceNotFoundException;
@@ -28,5 +27,10 @@ public class UserService {
 	
 	public User insert(User user) {
 		return repository.save(user);
+	}
+	
+	public void deleteById(String id) {
+		if(!repository.existsById(id))throw new ResourceNotFoundException(id);
+		repository.deleteById(id);
 	}
 }
