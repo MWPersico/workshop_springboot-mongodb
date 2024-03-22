@@ -33,4 +33,11 @@ public class UserService {
 		if(!repository.existsById(id))throw new ResourceNotFoundException(id);
 		repository.deleteById(id);
 	}
+	
+	public User update(String id, User obj) {
+		User user = repository.findById(id).orElseThrow(()->new ResourceNotFoundException(id));
+		user.setName(obj.getName());
+		user.setEmail(obj.getEmail());
+		return repository.save(user);
+	}
 }
