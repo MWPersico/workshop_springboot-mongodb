@@ -16,13 +16,17 @@ public class UserService {
 	@Autowired
 	UserRepository repository;
 	
-	public List<UserDTO> findAll(){
+	public List<User> findAll(){
 		List<User> users = repository.findAll();
-		return users.stream().map(UserDTO::new).toList();
+		return users;
 	}
 	
-	public UserDTO findById(String id) {
+	public User findById(String id) {
 		User user = repository.findById(id).orElseThrow(()->new ResourceNotFoundException(id)); 
-		return new UserDTO(user);
+		return user;
+	}
+	
+	public User insert(User user) {
+		return repository.save(user);
 	}
 }
