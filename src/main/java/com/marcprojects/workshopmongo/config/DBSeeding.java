@@ -10,7 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Configuration;
 
-import com.marcprojects.workshopmongo.AuthorDTO;
+import com.marcprojects.workshopmongo.dto.AuthorDTO;
 import com.marcprojects.workshopmongo.entities.Post;
 import com.marcprojects.workshopmongo.entities.User;
 import com.marcprojects.workshopmongo.repositories.PostRepository;
@@ -46,5 +46,8 @@ public class DBSeeding implements CommandLineRunner{
 		
 		users.get(2).getPosts().addAll(posts);
 		userRepository.save(users.get(2));
+		
+		Post teste = postRepository.findById(posts.get(1).getId()).get();
+		System.out.println(teste);
 	}
 }
