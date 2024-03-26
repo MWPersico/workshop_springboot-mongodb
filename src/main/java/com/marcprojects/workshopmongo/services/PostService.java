@@ -24,4 +24,9 @@ public class PostService {
 		PostDTO post = new PostDTO(repository.findById(id).orElseThrow(()->new ResourceNotFoundException(id)));
 		return post;
 	}
+	
+	public List<PostDTO> findByTitleContaining(String query){
+		List<PostDTO> posts = repository.findByTitleContainingIgnoreCase(query).stream().map(PostDTO::new).toList();
+		return posts;
+	}
 }
