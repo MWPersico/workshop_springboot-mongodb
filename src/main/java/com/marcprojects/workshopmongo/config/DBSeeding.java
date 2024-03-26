@@ -11,6 +11,7 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Configuration;
 
 import com.marcprojects.workshopmongo.dto.AuthorDTO;
+import com.marcprojects.workshopmongo.dto.CommentDTO;
 import com.marcprojects.workshopmongo.entities.Post;
 import com.marcprojects.workshopmongo.entities.User;
 import com.marcprojects.workshopmongo.repositories.PostRepository;
@@ -41,6 +42,9 @@ public class DBSeeding implements CommandLineRunner{
 		List<Post> posts = new ArrayList<>();
 		posts.add(new Post(null, sdf.parse("21/03/2018"), "Aprendendo Java", "Aprenda Java rapidamente", new AuthorDTO(users.get(2))));
 		posts.add(new Post(null, new Date(), "Aprendendo PHP", "Aprenda PHP rapidamente", new AuthorDTO(users.get(2))));
+		
+		posts.get(0).getComments().add(new CommentDTO("Boa viagem, mano", new Date(), new AuthorDTO(users.get(0))));
+		posts.get(1).getComments().add(new CommentDTO("Aproveite bastante!", new Date(), new AuthorDTO(users.get(1))));
 		
 		postRepository.saveAll(posts);
 		
