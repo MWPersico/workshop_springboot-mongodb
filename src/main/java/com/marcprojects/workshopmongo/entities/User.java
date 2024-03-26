@@ -1,9 +1,12 @@
 package com.marcprojects.workshopmongo.entities;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 @Document(collection = "user")
@@ -14,6 +17,9 @@ public class User implements Serializable{
 	String id;
 	String name;
 	String email;
+	
+	@DBRef(lazy = true) // cria associações por referência (lazy = true, posts só serão carregados caso sejam acessados)
+	List<Post> posts = new ArrayList<>();
 	
 	public User() {}
 
@@ -35,6 +41,10 @@ public class User implements Serializable{
 	public String getName() {
 		return name;
 	}
+	
+	public void setPosts(List<Post> posts) {
+		this.posts = posts;
+	}
 
 	public void setName(String name) {
 		this.name = name;
@@ -46,6 +56,10 @@ public class User implements Serializable{
 
 	public void setEmail(String email) {
 		this.email = email;
+	}
+	
+	public List<Post> getPosts(){
+		return posts;
 	}
 
 	@Override

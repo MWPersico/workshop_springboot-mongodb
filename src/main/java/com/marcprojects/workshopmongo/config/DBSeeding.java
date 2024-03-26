@@ -39,9 +39,12 @@ public class DBSeeding implements CommandLineRunner{
 		userRepository.saveAll(users);
 		
 		List<Post> posts = new ArrayList<>();
-		posts.add(new Post(null, sdf.parse("21/03/2018"), "Aprendendo Java", "Aprenda Java rapidamente", new AuthorDTO(users.get(1))));
+		posts.add(new Post(null, sdf.parse("21/03/2018"), "Aprendendo Java", "Aprenda Java rapidamente", new AuthorDTO(users.get(2))));
 		posts.add(new Post(null, new Date(), "Aprendendo PHP", "Aprenda PHP rapidamente", new AuthorDTO(users.get(2))));
 		
 		postRepository.saveAll(posts);
+		
+		users.get(2).getPosts().addAll(posts);
+		userRepository.save(users.get(2));
 	}
 }
