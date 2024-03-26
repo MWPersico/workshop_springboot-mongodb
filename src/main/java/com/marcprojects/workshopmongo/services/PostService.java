@@ -26,7 +26,8 @@ public class PostService {
 	}
 	
 	public List<PostDTO> findByTitleContaining(String query){
-		List<PostDTO> posts = repository.findByTitleContainingIgnoreCase(query).stream().map(PostDTO::new).toList();
+		// Aqui qualquer um dos dois métodos do repository funcionam!
+		List<PostDTO> posts = repository.searchByTitle(query).stream().map(PostDTO::new).toList();
 		return posts;
 	}
 }
