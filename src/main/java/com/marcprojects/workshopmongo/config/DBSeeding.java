@@ -46,8 +46,5 @@ public class DBSeeding implements CommandLineRunner{
 		
 		users.get(2).getPosts().addAll(posts);
 		userRepository.save(users.get(2));
-		
-		Post teste = postRepository.findById(posts.get(1).getId()).get();
-		System.out.println(teste);
 	}
 }
