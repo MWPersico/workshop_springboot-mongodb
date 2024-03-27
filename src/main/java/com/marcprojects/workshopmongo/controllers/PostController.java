@@ -1,5 +1,6 @@
 package com.marcprojects.workshopmongo.controllers;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,13 +22,29 @@ public class PostController {
 	PostService service;
 	
 	@GetMapping(value = {"/", ""})
-	public ResponseEntity<List<PostDTO>> findAll(@RequestParam(value="title", required=false) String titleSearch){
-		List<PostDTO> posts;
-		if(titleSearch!=null) {
-			posts = service.findByTitleContaining(URLHandler.decodeURLParameter(titleSearch));
-		}else {
-			posts = service.findAll();
-		}
+	public ResponseEntity<List<PostDTO>> findAll(){
+		List<PostDTO> posts = service.findAll();
+		return ResponseEntity.ok().body(posts);
+	}
+	
+	@GetMapping(params = "title")
+	public ResponseEntity<List<PostDTO>> find(@RequestParam("title") String titleSearch){
+		List<PostDTO> posts = service.findByTitleContaining(URLHandler.decodeURLParameter(titleSearch));
+		return ResponseEntity.ok().body(posts);
+	}
+	
+	// Busca com multiplos parâmetros 'posts?text&minDate&maxDate'
+	@GetMapping(params = {"text", "minDate", "maxDate"})
+	public ResponseEntity<List<PostDTO>> findByTextInInterval(
+			@RequestParam(value="text",defaultValue="", required=false) String text, 
+			@RequestParam(value="minDate",defaultValue="", required=false) String minDate, 
+			@RequestParam(value="maxDate",defaultValue="", required=false) String maxDate
+	){
+		List<PostDTO> posts = service.searchWithTextInRange(
+			URLHandler.decodeURLParameter(text),
+			URLHandler.decodeDate(minDate, new Date(0L)),
+			URLHandler.decodeDate(maxDate, new Date())
+		);
 		return ResponseEntity.ok().body(posts);
 	}
 	

@@ -1,5 +1,6 @@
 package com.marcprojects.workshopmongo.services;
 
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -28,6 +29,14 @@ public class PostService {
 	public List<PostDTO> findByTitleContaining(String query){
 		// Aqui qualquer um dos dois métodos do repository funcionam!
 		List<PostDTO> posts = repository.searchByTitle(query).stream().map(PostDTO::new).toList();
+		return posts;
+	}
+	
+	public List<PostDTO> searchWithTextInRange(String text, Date minDate, Date maxDate){
+		// Adicionando um dia
+		maxDate = new Date(maxDate.getTime()+1000*60*60*24);
+		
+		List<PostDTO> posts = repository.searchWithTextInRange(text, minDate, maxDate).stream().map(PostDTO::new).toList();
 		return posts;
 	}
 }
